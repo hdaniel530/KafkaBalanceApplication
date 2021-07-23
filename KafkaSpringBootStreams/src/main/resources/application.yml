@@ -1,0 +1,33 @@
+spring:
+  data:
+    mongodb:
+      database: test
+      uri: mongodb://localhost:27017/
+
+  kafka:
+    template:
+      default-topic: fourth_topic-1
+    properties:
+      schema.registry.url: http://127.0.0.1:8081
+#      default.key.serde: org.apache.kafka.common.serialization.Serdes.StringSerde
+#      default.value.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        acks: all
+        retries: 3
+        retry.backoff.ms: 1000
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      auto-offset-reset: earliest
+      group-id: my-first-app
+    streams:
+      bootstrap-servers: 127.0.0.1:9092
+      application-id: bank-app-1
+    admin:
+      properties:
+        bootstrap.servers: 127.0.0.1:9092
